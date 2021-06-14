@@ -1,11 +1,11 @@
 import React from 'react'
 import products from '../products'
-import { Row, Col, CardGroup } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 const HomeScreen = () => {
 	return (
 		<>
-			<h1>Latest</h1>
+			<h1>LATEST </h1>
 			<Row>
 				{products && products.length > 0 ? (
 					<>
