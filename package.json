@@ -8,6 +8,7 @@
   "author": "Sabbaghh <afsabbagh9@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "colors": "^1.4.0",
     "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
