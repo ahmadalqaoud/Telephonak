@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "E-commerce website",
   "main": "index.js",
+  "type":"module",
   "repository": "https://github.com/Sabbaghh/TELEPHONAK.git",
   "author": "Sabbaghh <afsabbagh9@gmail.com>",
   "license": "MIT",
