@@ -60,7 +60,7 @@ const ProductScreen = ({ match }) => {
 										<Row>
 											<Col> STATUS :</Col>
 											<Col>
-												{product.countInStock > 0 ? 'Instock' : 'Out of stock'}
+												{product.countInStock > 0 ? 'In stock' : 'Out of stock'}
 											</Col>
 										</Row>
 									</ListGroup.Item>
