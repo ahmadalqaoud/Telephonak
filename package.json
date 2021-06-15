@@ -7,10 +7,13 @@
   "author": "Sabbaghh <afsabbagh9@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^6.2.0",
     "express": "^4.17.1",
     "nodemon": "^2.0.7"
   },
   "scripts": {
-    "start":"nodemon backend/server"
+    "server" :"nodemon backend/server",
+    "client":"cd frontend && yarn start",
+    "dev" :" concurrently \"yarn server\"  \"yarn client\""
   }
 }
