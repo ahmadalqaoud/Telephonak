@@ -30,10 +30,8 @@ const ProductScreen = ({ match }) => {
 							<h3>PRICE : ${product.price}</h3>
 						</ListGroup.Item>
 						<ListGroup.Item>
-							<p>
-								<h5>DESCRIPTION :</h5>
-								{product.description}
-							</p>
+							<h5>DESCRIPTION :</h5>
+							<p>{product.description}</p>
 						</ListGroup.Item>
 					</ListGroup>
 				</Col>
