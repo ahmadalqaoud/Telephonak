@@ -8,6 +8,7 @@
   "author": "Sabbaghh <afsabbagh9@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
@@ -18,6 +19,8 @@
   "scripts": {
     "server": "nodemon backend/server",
     "client": "cd frontend && yarn start",
-    "dev": " concurrently \"yarn server\"  \"yarn client\""
+    "dev": " concurrently \"yarn server\"  \"yarn client\"",
+    "data:import":"node backend/seeder -i",
+    "data:destroy":"node backend/seeder -d"
   }
 }
