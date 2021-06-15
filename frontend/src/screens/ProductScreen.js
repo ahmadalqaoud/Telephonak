@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Row, Col, Button, ListGroup, Card, Image } from 'react-bootstrap'
-import Rating from '../components/Rating'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Row, Col, Button, ListGroup, Card, Image } from 'react-bootstrap';
+import Rating from '../components/Rating';
+import axios from 'axios';
 const ProductScreen = ({ match }) => {
-	const [product, setProduct] = useState('')
+	const [product, setProduct] = useState();
 	useEffect(() => {
 		const getProduct = async () => {
-			const res = await axios.get(`/api/products/${match.params.id}`)
-			setProduct(res.data)
-		}
-		return getProduct()
-	}, [match.params.id])
+			try {
+				const res = await axios.get(`/api/products/${match.params.id}`);
+				setProduct(res.data);
+			} catch (error) {
+				console.log('err');
+			}
+		};
+		return getProduct();
+	}, [match.params.id]);
 	return (
 		<>
-			{product && (
+			{product ? (
 				<>
 					<Link className='btn btn-dark my-3' to='/'>
 						GO BACK
@@ -26,7 +30,7 @@ const ProductScreen = ({ match }) => {
 						<Col lg={6} md={6}>
 							<ListGroup variant='flush'>
 								<ListGroup.Item>
-									<h4>{product.name.toUpperCase()}</h4>
+									<h4>{product?.name?.toUpperCase()}</h4>
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<Rating
@@ -75,9 +79,11 @@ const ProductScreen = ({ match }) => {
 						</Col>
 					</Row>
 				</>
+			) : (
+				<h6 className='text-dark'>product not found</h6>
 			)}
 		</>
-	)
-}
+	);
+};
 
-export default ProductScreen
+export default ProductScreen;
