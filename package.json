@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "E-commerce website",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "repository": "https://github.com/Sabbaghh/TELEPHONAK.git",
   "author": "Sabbaghh <afsabbagh9@gmail.com>",
   "license": "MIT",
@@ -11,6 +11,7 @@
     "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "mongoose": "^5.12.13",
     "nodemon": "^2.0.7"
   },
   "scripts": {
