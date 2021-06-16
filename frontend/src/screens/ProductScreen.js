@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, ListGroup, Card, Image } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import axios from 'axios';
 import LoadErrHandler from '../components/LoadErrHandler';
+//redux
+import { getProductDetails } from '../redux/actions/productsActions';
+import { useSelector, useDispatch } from 'react-redux';
 const ProductScreen = ({ match }) => {
-	const [product, setProduct] = useState();
+	const dispatch = useDispatch();
+	const { product, loading, error } = useSelector(
+		(state) => state.productDetails,
+	);
 	useEffect(() => {
-		const getProduct = async () => {
-			try {
-				const res = await axios.get(`/api/products/${match.params.id}`);
-				setProduct(res.data);
-			} catch (error) {
-				console.log('err');
-			}
-		};
-		return getProduct();
-	}, [match.params.id]);
+		dispatch(getProductDetails(match.params.id));
+	}, [match.params.id, dispatch]);
 	return (
 		<>
-			<LoadErrHandler loading={false} error={`OOPS! something went wrong`}>
+			<LoadErrHandler
+				loading={loading}
+				error={error ? `OOPS! something went wrong` : false}
+			>
 				{product && (
 					<>
 						<Link className='my-3 btn btn-dark' to='/'>
