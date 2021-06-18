@@ -13,8 +13,10 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
 						item.product === ItemExist.product ? payload : item,
 					),
 				};
+			} else {
+				return { cartItems: [...state.cartItems, payload] };
 			}
-			return { cartItems: [...state.cartItems, payload] };
+
 		case CART_REMOVE_ITEM:
 			return state;
 		default:

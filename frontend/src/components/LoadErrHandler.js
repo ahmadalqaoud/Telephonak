@@ -1,7 +1,7 @@
 import React from 'react';
 import { Spinner, Container, Alert } from 'react-bootstrap';
 
-const LoadErrHandler = ({ children, loading, error }) => {
+const LoadErrHandler = ({ children, loading, error, variant }) => {
 	return (
 		<>
 			{loading ? (
@@ -11,7 +11,7 @@ const LoadErrHandler = ({ children, loading, error }) => {
 					</Spinner>
 				</Container>
 			) : error ? (
-				<Alert variant='danger'>{error}</Alert>
+				<Alert variant={variant ? variant : 'danger'}>{error}</Alert>
 			) : (
 				children
 			)}

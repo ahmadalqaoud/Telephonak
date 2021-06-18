@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, ListGroup, Card, Image } from 'react-bootstrap';
+import {
+	Row,
+	Col,
+	Button,
+	ListGroup,
+	Card,
+	Image,
+	Form,
+} from 'react-bootstrap';
 import Rating from '../components/Rating';
 import LoadErrHandler from '../components/LoadErrHandler';
 //redux

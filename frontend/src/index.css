@@ -1,5 +1,11 @@
+*{
+  padding: 0;
+  margin: 0;
+  transition: all 0.5s ease-in-out;
+}
 main{
   min-height: 80vh;
+
 }
 
 a{
@@ -7,9 +13,49 @@ a{
 }
 
 .flex-center-container {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.scrollable-div{
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-y: scroll;
+  -ms-scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.width-70{
+  width:70%;
+}
+.hide-lg{
+    display:none
+  }
+  .full-width{
+    width:100%
+  }
+
+@media  (max-width: 840px){
+  .scrollable-div{
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-y: scroll;
+  -ms-scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  padding:15%
+}
+.scroll-item{
+  scroll-snap-align: start;
+}
+  .full-width-sm{
+    width:100%
+  }
+  .hide-lg{
+    display: block;
+  }
+  
 }
