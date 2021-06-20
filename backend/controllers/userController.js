@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
+import generateAuthToken from '../utilities/generateToken.js';
 
 //@des      auth user & get token
 //@route    POST '/api/users/login'
@@ -16,7 +17,7 @@ export const authUser = asyncHandler(async (req, res) => {
 				name: user.name,
 				email: user.email,
 				isAdmin: user.isAdmin,
-				token: null,
+				token: generateAuthToken(user._id),
 			});
 		} else {
 			res.status(401);
@@ -25,5 +26,24 @@ export const authUser = asyncHandler(async (req, res) => {
 	} else {
 		res.status(401);
 		throw new Error('invalid email or password');
+	}
+});
+
+//@des      auth user & get token
+//@route    GET '/api/users/profile'
+//@access   PRIVATE
+export const getUserProfile = asyncHandler(async (req, res) => {
+	//coming from protected route
+	const { user } = req;
+	if (user) {
+		res.json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			isAdmin: user.isAdmin,
+		});
+	} else {
+		res.status(404);
+		throw new Error('Profile not found');
 	}
 });
