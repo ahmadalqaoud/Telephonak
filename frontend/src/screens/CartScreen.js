@@ -25,7 +25,11 @@ const CartScreen = ({ match, location, history }) => {
 			<>
 				<h5>SHOPPING CART</h5>
 				<Row>
-					<Col className='scrollable-div' lg={8} md={12} sm={12}>
+					<Col lg={4} md={12} sm={12}>
+						<CheckoutForm cartItems={cartItems} />
+					</Col>
+					<hr className='hide-lg' />
+					<Col className='my-3 scrollable-div' lg={8} md={12} sm={12}>
 						<ListGroup variant='flush'>
 							{cartItems.length > 0 &&
 								cartItems.map((item) => (
@@ -33,8 +37,6 @@ const CartScreen = ({ match, location, history }) => {
 								))}
 						</ListGroup>
 					</Col>
-					<hr className='hide-lg' />
-					<CheckoutForm cartItems={cartItems} />
 				</Row>
 			</>
 		</LoadErrHandler>

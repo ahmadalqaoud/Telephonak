@@ -2,15 +2,15 @@ import React from 'react';
 import { Row, Col, Image, Button, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../redux/actions/cartActions';
+import { addToCart, removeFromCart } from '../redux/actions/cartActions';
 import Rating from './Rating';
 const CarItem = ({ item }) => {
 	const dispatch = useDispatch();
 	const addItemOnChange = (productId, e) => {
 		dispatch(addToCart(productId, parseInt(e.target.value)));
 	};
-	const removeFromCart = (productId) => {
-		console.log(productId);
+	const removeCart = (productId) => {
+		dispatch(removeFromCart(productId));
 	};
 	return (
 		<ListGroup.Item key={item.product} className='scroll-item'>
@@ -51,7 +51,7 @@ const CarItem = ({ item }) => {
 								<Button
 									type='button'
 									variant='dark'
-									onClick={() => removeFromCart(item.product)}
+									onClick={() => removeCart(item.product)}
 									className='full-width full-width-sm'
 								>
 									<small>REMOVE</small>

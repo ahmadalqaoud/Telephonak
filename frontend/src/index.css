@@ -1,6 +1,7 @@
 *{
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   transition: all 0.5s ease-in-out;
 }
 main{
@@ -20,7 +21,7 @@ a{
 }
 
 .scrollable-div{
-  height: 70vh;
+  height: 65vh;
   overflow-y: scroll;
   overflow-y: scroll;
   -ms-scroll-snap-type: y mandatory;
@@ -37,7 +38,14 @@ a{
   .full-width{
     width:100%
   }
-
+.cart-counter{
+  background-color: cadetblue;
+  display: inline-block;
+  width: 0.5rem;
+  height:0.5rem;
+  border-radius: 1rem;
+  text-align: center;
+}
 @media  (max-width: 840px){
   .scrollable-div{
   height: 70vh;

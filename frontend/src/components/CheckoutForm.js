@@ -1,8 +1,11 @@
 import React from 'react';
 import { ListGroup, Col, Button } from 'react-bootstrap';
 const CheckoutForm = ({ cartItems }) => {
+	const checkoutHandler = () => {
+		console.log('checkout');
+	};
 	return (
-		<Col lg={4} md={12} sm={12}>
+		<>
 			<ListGroup>
 				<ListGroup.Item as='h2' className=' text-dark'>
 					TOTAL ITEMS : {` `}
@@ -19,12 +22,13 @@ const CheckoutForm = ({ cartItems }) => {
 						variant='dark'
 						className='full-width-sm full-width'
 						disabled={cartItems.length <= 0}
+						onClick={() => checkoutHandler()}
 					>
 						Proceed to checkout
 					</Button>
 				</ListGroup.Item>
 			</ListGroup>
-		</Col>
+		</>
 	);
 };
 
