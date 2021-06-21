@@ -47,11 +47,11 @@ a{
   text-align: center;
 }
 .login-container{
-  border:1px solid black;
-  width: 70vw;
+  border:1px solid rgba(0, 0, 0, 0.2);
+  width: 90vw;
   border-radius: 0.2rem;
-  height: 70vh;
-  margin-top: 2rem;
+  height: 36rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2),-5px -5px 15px rgba(0, 0, 0, 0.2);
 }
 @media  (max-width: 840px){
   .scrollable-div{

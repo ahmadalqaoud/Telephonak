@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 const SideImage = () => (
 	<Col
+		className='hide-sm'
 		lg={6}
 		md={0}
 		sm={0}
