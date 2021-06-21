@@ -3,7 +3,7 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
 const NavBar = () => {
-	// const { cartItems } = useSelector((state) => state.cart);
+	const { userInfo } = useSelector((state) => state.userLogin);
 	return (
 		<>
 			<Navbar bg='dark' variant='dark'>
@@ -21,12 +21,14 @@ const NavBar = () => {
 								)} */}
 							</Nav.Link>
 						</LinkContainer>
-						<LinkContainer to='/SignIn'>
-							<Nav.Link>
-								<i className='fas fa-user' /> {` `}
-								Sign In
-							</Nav.Link>
-						</LinkContainer>
+						{!userInfo && (
+							<LinkContainer to='/SignIn'>
+								<Nav.Link>
+									<i className='fas fa-user' /> {` `}
+									Sign In
+								</Nav.Link>
+							</LinkContainer>
+						)}
 					</Nav>
 				</Container>
 			</Navbar>

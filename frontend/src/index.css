@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  transition: all 0.5s ease-in-out;
+  /* transition: all 0.5s ease-in-out; */
 }
 main{
   min-height: 80vh;
@@ -46,6 +46,13 @@ a{
   border-radius: 1rem;
   text-align: center;
 }
+.login-container{
+  border:1px solid black;
+  width: 70vw;
+  border-radius: 0.2rem;
+  height: 70vh;
+  margin-top: 2rem;
+}
 @media  (max-width: 840px){
   .scrollable-div{
   height: 70vh;
@@ -64,6 +71,9 @@ a{
   }
   .hide-lg{
     display: block;
+  }
+  .hide-sm{
+    display: none;
   }
   
 }
