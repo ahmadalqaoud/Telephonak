@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
+import DropDownNav from './DropDownNav';
 const NavBar = () => {
 	const { userInfo } = useSelector((state) => state.userLogin);
 	return (
@@ -11,11 +12,13 @@ const NavBar = () => {
 					<LinkContainer exact to='/'>
 						<Navbar.Brand>TELEPHONAK</Navbar.Brand>
 					</LinkContainer>
-					<Nav className='ml-auto'>
+
+					<Nav>
+						{userInfo && <DropDownNav userName={userInfo.name} />}
 						<LinkContainer exact to='/Cart'>
 							<Nav.Link>
 								<i className='fas fa-shopping-cart' /> {` `}
-								CART {` `}
+								<span className='hide-sm'>CART</span> {` `}
 								{/* {cartItems && cartItems.length > 0 && (
 									<p className='cart-counter'>{cartItems.length}</p>
 								)} */}
