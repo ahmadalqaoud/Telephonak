@@ -5,14 +5,15 @@ import {
 	productListReducer,
 	productDetailsReducer,
 } from './reducers/productsReducers';
-import { userReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { cartReducer } from './reducers/CartReducers';
 
 const reducer = combineReducers({
 	products: productListReducer,
 	productDetails: productDetailsReducer,
 	cart: cartReducer,
-	userLogin: userReducer,
+	userLogin: userLoginReducer,
+	userRegister: userRegisterReducer,
 });
 const LocalStorageCartItems = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))

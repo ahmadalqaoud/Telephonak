@@ -1,12 +1,9 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useSelector } from 'react-redux';
 import DropDownNav from './DropDownNav';
 const NavBar = ({ userLogin }) => {
-	// const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log(userInfo);
 	return (
 		<>
 			<Navbar bg='dark' variant='dark'>
@@ -28,10 +25,7 @@ const NavBar = ({ userLogin }) => {
 						<LinkContainer exact to='/Cart'>
 							<Nav.Link>
 								<i className='fas fa-shopping-cart' /> {` `}
-								<span className='hide-sm'>CART</span> {` `}
-								{/* {cartItems && cartItems.length > 0 && (
-									<p className='cart-counter'>{cartItems.length}</p>
-								)} */}
+								<span className='hide-sm'>CART</span>
 							</Nav.Link>
 						</LinkContainer>
 					</Nav>
