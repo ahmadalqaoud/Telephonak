@@ -30,7 +30,7 @@ const SignInScreen = ({ history, location }) => {
 	return (
 		<LoadErrHandler loading={loading ? loading : false}>
 			<Container className='flex-center-container'>
-				<Row className='login-container'>
+				<Row className='register-container'>
 					<SideImage />
 					<RegisterForm redirect={redirect} />
 				</Row>

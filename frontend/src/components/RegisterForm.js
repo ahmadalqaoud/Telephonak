@@ -7,7 +7,7 @@ import { userRegister } from '../redux/actions/userActions';
 
 export const LoginForm = ({ location, redirect }) => {
 	const dispatch = useDispatch();
-	const { error } = useSelector((state) => state.userLogin);
+	const { error } = useSelector((state) => state.userRegister);
 	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');

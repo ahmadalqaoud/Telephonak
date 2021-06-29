@@ -53,6 +53,13 @@ a{
   height: 36rem;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2),-5px -5px 15px rgba(0, 0, 0, 0.2);
 }
+.register-container{
+  border:1px solid rgba(0, 0, 0, 0.2);
+  width: 90vw;
+  border-radius: 0.2rem;
+  /* height: 36rem; */
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2),-5px -5px 15px rgba(0, 0, 0, 0.2);
+}
 @media  (max-width: 840px){
   .scrollable-div{
   height: 70vh;
