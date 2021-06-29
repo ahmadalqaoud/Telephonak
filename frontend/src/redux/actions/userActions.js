@@ -39,7 +39,7 @@ export const userLogOut = () => (dispatch) => {
 
 //user Register
 
-const userRegister = (name, email, password) => async (dispatch) => {
+export const userRegister = (name, email, password) => async (dispatch) => {
 	dispatch({ type: USER_REGISTER_REQUEST });
 	const config = {
 		headers: {
