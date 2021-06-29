@@ -15,7 +15,7 @@ export const userReducer = (state = {}, action) => {
 		case USER_LOGIN_FAIL:
 			return { loading: false, error: payload };
 		case USER_LOGIN_LOGOUT:
-			return { loading: false, userInfo: {} };
+			return { loading: false, userInfo: null };
 		default:
 			return state;
 	}

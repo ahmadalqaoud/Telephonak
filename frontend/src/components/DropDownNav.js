@@ -1,8 +1,11 @@
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { userLogOut } from '../redux/actions/userActions';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const DropDownNav = ({ userName }) => {
+	const dispatch = useDispatch();
 	const links = [
 		{
 			name: 'Profile',
@@ -14,7 +17,7 @@ const DropDownNav = ({ userName }) => {
 		},
 	];
 	return (
-		<NavDropdown drop='left' title={userName.split(' ')[0]} variant='dark'>
+		<NavDropdown drop='left' title={userName} variant='dark'>
 			{links.map((link) => {
 				return (
 					<LinkContainer exact to={link.to} key={link.to}>
@@ -23,7 +26,9 @@ const DropDownNav = ({ userName }) => {
 				);
 			})}
 			<NavDropdown.Divider />
-			<NavDropdown.Item as='button'>Sign out</NavDropdown.Item>
+			<NavDropdown.Item as='button' onClick={() => dispatch(userLogOut())}>
+				Sign out
+			</NavDropdown.Item>
 		</NavDropdown>
 	);
 };

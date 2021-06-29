@@ -3,8 +3,10 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
 import DropDownNav from './DropDownNav';
-const NavBar = () => {
-	const { userInfo } = useSelector((state) => state.userLogin);
+const NavBar = ({ userLogin }) => {
+	// const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+	console.log(userInfo);
 	return (
 		<>
 			<Navbar bg='dark' variant='dark'>
@@ -12,9 +14,17 @@ const NavBar = () => {
 					<LinkContainer exact to='/'>
 						<Navbar.Brand>TELEPHONAK</Navbar.Brand>
 					</LinkContainer>
-
 					<Nav>
-						{userInfo && <DropDownNav userName={userInfo.name} />}
+						{userInfo ? (
+							<DropDownNav userName={userInfo.name} />
+						) : (
+							<LinkContainer to='/SignIn'>
+								<Nav.Link>
+									<i className='fas fa-user' /> {` `}
+									Sign In
+								</Nav.Link>
+							</LinkContainer>
+						)}
 						<LinkContainer exact to='/Cart'>
 							<Nav.Link>
 								<i className='fas fa-shopping-cart' /> {` `}
@@ -24,14 +34,6 @@ const NavBar = () => {
 								)} */}
 							</Nav.Link>
 						</LinkContainer>
-						{!userInfo && (
-							<LinkContainer to='/SignIn'>
-								<Nav.Link>
-									<i className='fas fa-user' /> {` `}
-									Sign In
-								</Nav.Link>
-							</LinkContainer>
-						)}
 					</Nav>
 				</Container>
 			</Navbar>
