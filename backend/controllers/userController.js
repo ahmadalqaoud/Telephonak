@@ -59,18 +59,44 @@ export const authUser = asyncHandler(async (req, res) => {
 	}
 });
 
-//@des      auth user & get token
+//@des      get user profile
 //@route    GET '/api/users/profile'
 //@access   PRIVATE
 export const getUserProfile = asyncHandler(async (req, res) => {
 	//coming from protected route
-	const { user } = req;
+	const user = await User.findById(req.user._id);
 	if (user) {
 		res.json({
 			_id: user._id,
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+		});
+	} else {
+		res.status(404);
+		throw new Error('Profile not found');
+	}
+});
+
+//@des      change user profile data
+//@route    PUT '/api/users/profile'
+//@access   PRIVATE
+export const updateUserProfile = asyncHandler(async (req, res) => {
+	//coming from protected route
+	const user = await User.findById(req.user._id);
+	if (user) {
+		user.name = req.body.name || user.name;
+		user.email = req.body.email || user.email;
+		if (req.body.password) {
+			user.password = req.body.password;
+		}
+		const updatedUser = await user.save();
+		res.json({
+			_id: updatedUser._id,
+			name: updatedUser.name,
+			email: updatedUser.email,
+			isAdmin: updatedUser.isAdmin,
+			token: generateAuthToken(updatedUser._id),
 		});
 	} else {
 		res.status(404);

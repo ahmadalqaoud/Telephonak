@@ -20,7 +20,7 @@ const SideImage = () => (
 );
 
 const SignInScreen = ({ history, location }) => {
-	const { loading, userInfo } = useSelector((state) => state.userLogin);
+	const { loading, userInfo } = useSelector((state) => state.userRegister);
 	const redirect = location.search ? location.search.split('=')[1] : '/';
 	useEffect(() => {
 		if (userInfo) {
