@@ -9,6 +9,10 @@ import {
 	USER_DETAILS_FAIL,
 	USER_DETAILS_REQUEST,
 	USER_DETAILS_SUCCESS,
+	USER_UPDATE_PROFILE_FAIL,
+	USER_UPDATE_PROFILE_REQUEST,
+	USER_UPDATE_PROFILE_RESET,
+	USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -50,6 +54,21 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
 			return { loading: false, user: payload };
 		case USER_DETAILS_FAIL:
 			return { loading: false, error: payload };
+		default:
+			return state;
+	}
+};
+export const userUpdateDetailsReducer = (state = {}, action) => {
+	const { payload, type } = action;
+	switch (type) {
+		case USER_UPDATE_PROFILE_REQUEST:
+			return { loading: true };
+		case USER_UPDATE_PROFILE_SUCCESS:
+			return { loading: false, userInfo: payload, success: true };
+		case USER_UPDATE_PROFILE_FAIL:
+			return { loading: false, error: payload, success: false };
+		case USER_UPDATE_PROFILE_RESET:
+			return {};
 		default:
 			return state;
 	}

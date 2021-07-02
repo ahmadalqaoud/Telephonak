@@ -9,6 +9,10 @@ import {
 	USER_DETAILS_FAIL,
 	USER_DETAILS_REQUEST,
 	USER_DETAILS_SUCCESS,
+	USER_UPDATE_PROFILE_FAIL,
+	USER_UPDATE_PROFILE_REQUEST,
+	USER_UPDATE_PROFILE_RESET,
+	USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants';
 import axios from 'axios';
 export const userLogin = (email, password) => async (dispatch) => {
@@ -66,7 +70,7 @@ export const userRegister = (name, email, password) => async (dispatch) => {
 };
 
 //get current userDetails
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch, getState) => {
 	dispatch({ type: USER_DETAILS_REQUEST });
 	const {
 		userLogin: { userInfo },
@@ -74,11 +78,11 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${userInfo.token}`,
+			Authorization: `Bearer ${userInfo?.token}`,
 		},
 	};
 	try {
-		const { data } = await axios.get(`/api/users/profile/${id}`, config);
+		const { data } = await axios.get(`/api/users/profile`, config);
 		dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
@@ -90,3 +94,33 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 		});
 	}
 };
+//get current userDetails
+export const UpdateUserDetails =
+	(name, email, password) => async (dispatch, getState) => {
+		dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
+		const {
+			userLogin: { userInfo },
+		} = getState();
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo?.token}`,
+			},
+		};
+		const body = { name, email, password };
+		try {
+			const { data } = await axios.put(`/api/users/profile`, body, config);
+			dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+			setTimeout(() => {
+				dispatch({ type: USER_UPDATE_PROFILE_RESET });
+			}, 3000);
+		} catch (error) {
+			dispatch({
+				type: USER_UPDATE_PROFILE_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			});
+		}
+	};

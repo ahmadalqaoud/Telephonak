@@ -21,7 +21,7 @@ const App = () => {
 					<Route path='/Register' component={RegisterScreen} />
 					<Route path='/product/:id' component={ProductScreen} />
 					<Route path='/cart/:id?' component={CartScreen} />
-					<Route path='/profile/:id' component={ProfileScreen} />
+					<Route path='/profile' component={ProfileScreen} />
 				</Container>
 			</main>
 			<Footer />
