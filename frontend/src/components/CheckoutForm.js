@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, Col, Button } from 'react-bootstrap';
+import { ListGroup, Button } from 'react-bootstrap';
 const CheckoutForm = ({ cartItems }) => {
 	const checkoutHandler = () => {
 		console.log('checkout');
