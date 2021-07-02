@@ -1,8 +1,10 @@
 import React from 'react';
 import { ListGroup, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 const CheckoutForm = ({ cartItems }) => {
+	const history = useHistory();
 	const checkoutHandler = () => {
-		console.log('checkout');
+		history.push('/signIn?redirect=shipping');
 	};
 	return (
 		<>
