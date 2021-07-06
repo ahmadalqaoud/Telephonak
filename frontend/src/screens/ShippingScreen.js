@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ShippingInformations from '../components/ShippingSteps/ShippingInformations';
+import PaymentMethod from '../components/ShippingSteps/PaymentMethod';
 import { Container, Row } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 import Steps from '../components/Steps';
@@ -9,7 +10,9 @@ const ShippingScreen = () => {
 	const currentComponent = () => {
 		switch (currentComponentIndex) {
 			case 1:
-				return <div>hi</div>;
+				return (
+					<PaymentMethod setCurrentComponentIndex={setCurrentComponentIndex} />
+				);
 			default:
 				return (
 					<ShippingInformations

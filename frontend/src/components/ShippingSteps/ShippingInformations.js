@@ -89,18 +89,14 @@ const ShippingInformations = ({ setCurrentComponentIndex }) => {
 									<Button
 										variant='dark'
 										type='button'
-										className='flex-end w-25'
+										className='flex-end'
 										onClick={() => {
 											history.push('/cart');
 										}}
 									>
 										CANCEL
 									</Button>
-									<Button
-										variant='dark'
-										type='submit'
-										className='flex-start w-25'
-									>
+									<Button variant='dark' type='submit' className='flex-start '>
 										NEXT
 									</Button>
 								</Col>

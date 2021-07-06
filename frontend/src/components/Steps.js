@@ -8,7 +8,7 @@ const Steps = ({ lastStep, activeStep }) => {
 		},
 		{
 			name: 'Payment',
-			icon: 'fas fa-shopping-cart',
+			icon: 'fas fa-money-bill-wave-alt',
 		},
 		{
 			name: 'Payment',

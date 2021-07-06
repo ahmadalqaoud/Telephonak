@@ -100,9 +100,11 @@ a{
 }
 @media  (max-width: 840px){
   .stepsContainer .line{
-    width: 3rem;
+    width: 2rem;
   }
-  
+  .btn-sm {
+    width : 10% !important
+  }
   .scrollable-div{
   height: 70vh;
   overflow-y: scroll;
