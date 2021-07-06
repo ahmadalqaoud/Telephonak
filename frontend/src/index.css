@@ -63,7 +63,46 @@ a{
   /* height: 36rem; */
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2),-5px -5px 15px rgba(0, 0, 0, 0.2);
 }
+.stepsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+ .stepsContainer .step{
+  background-color: #012a4a;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  font-size: 16px;
+  border-radius: 50px;
+  color: #FFF;
+  cursor: pointer;
+  transition: background-color 0.5s ease-in-out;
+}
+.stepsContainer .step.disabled {
+  background-color: #e2e2df;
+  color: #343a40;
+  cursor: auto;
+  color: #343a40;
+  transition: background-color 0.5s ease-in-out;
+}
+.stepsContainer .line{
+  background-color: #012a4a;
+  width: 8rem;
+  height: 0.5rem;  
+  transition: background-color 0.5s ease-in-out;
+}
+.stepsContainer .line.disabled{
+   background-color: #e2e2df;
+   transition: background-color 0.5s ease-in-out;
+}
 @media  (max-width: 840px){
+  .stepsContainer .line{
+    width: 3rem;
+  }
+  
   .scrollable-div{
   height: 70vh;
   overflow-y: scroll;

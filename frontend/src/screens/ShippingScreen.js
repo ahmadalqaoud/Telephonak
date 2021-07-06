@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ShippingInformations from '../components/ShippingSteps/ShippingInformations';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
+import Steps from '../components/Steps';
 
 const ShippingScreen = () => {
 	const [currentComponentIndex, setCurrentComponentIndex] = useState(0);
@@ -21,6 +22,7 @@ const ShippingScreen = () => {
 	return (
 		<LoadErrHandler>
 			<Container>
+				<Steps lastStep={3} activeStep={currentComponentIndex - 1} />
 				<Row>{currentComponent()}</Row>
 			</Container>
 		</LoadErrHandler>
