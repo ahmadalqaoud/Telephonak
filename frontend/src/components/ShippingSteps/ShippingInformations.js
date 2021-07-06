@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Col, Form, Row, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { saveShippingAddress } from '../../redux/actions/cartActions';
 const SideImage = () => (
 	<Col
 		className='hide-sm'
@@ -15,13 +18,16 @@ const SideImage = () => (
 	/>
 );
 const ShippingInformations = ({ setCurrentComponentIndex }) => {
+	const dispatch = useDispatch();
+	const { ShippingAddress } = useSelector((state) => state.cart);
 	const history = useHistory();
-	const [address, setAddress] = useState('');
-	const [city, setCity] = useState('');
-	const [postalCode, setPostalCode] = useState('');
-	const [country, setCountry] = useState('');
+	const [address, setAddress] = useState(ShippingAddress.address);
+	const [city, setCity] = useState(ShippingAddress.city);
+	const [postalCode, setPostalCode] = useState(ShippingAddress.postalCode);
+	const [country, setCountry] = useState(ShippingAddress.country);
 	const onSubmit = (e) => {
 		e.preventDefault();
+		dispatch(saveShippingAddress({ address, city, postalCode, country }));
 		setCurrentComponentIndex((prev) => prev + 1);
 	};
 	return (

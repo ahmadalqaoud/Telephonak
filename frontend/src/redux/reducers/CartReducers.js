@@ -1,5 +1,12 @@
-import { CART_REMOVE_ITEM, CART_ADD_ITEM } from '../constants/cartConstants';
-export const cartReducer = (state = { cartItems: [] }, action) => {
+import {
+	CART_REMOVE_ITEM,
+	CART_ADD_ITEM,
+	CART_SAVE_SHIPPING_ADDRESS,
+} from '../constants/cartConstants';
+export const cartReducer = (
+	state = { cartItems: [], ShippingAddress: {} },
+	action,
+) => {
 	const { payload, type } = action;
 	switch (type) {
 		case CART_ADD_ITEM:
@@ -26,6 +33,8 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
 					),
 				],
 			};
+		case CART_SAVE_SHIPPING_ADDRESS:
+			return { ...state, ShippingAddress: payload };
 		default:
 			return state;
 	}
