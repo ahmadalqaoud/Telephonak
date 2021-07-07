@@ -29,8 +29,8 @@ const SignInScreen = ({ history, location }) => {
 	}, [userInfo, history, redirect]);
 	return (
 		<LoadErrHandler loading={loading ? loading : false}>
-			<Container className='flex-center-container'>
-				<Row className='register-container'>
+			<Container>
+				<Row>
 					<SideImage />
 					<RegisterForm redirect={redirect} />
 				</Row>
