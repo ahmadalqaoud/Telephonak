@@ -22,7 +22,7 @@ export const cartReducer = (
 					),
 				};
 			} else {
-				return { cartItems: [...state.cartItems, payload] };
+				return { ...state, cartItems: [...state.cartItems, payload] };
 			}
 
 		case CART_REMOVE_ITEM:

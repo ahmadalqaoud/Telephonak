@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ShippingInformations from '../components/ShippingSteps/ShippingInformations';
 import PaymentMethod from '../components/ShippingSteps/PaymentMethod';
 import { Container, Row } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 import Steps from '../components/Steps';
+import { useSelector, useDispatch } from 'react-redux';
 
-const ShippingScreen = () => {
+const ShippingScreen = ({ history }) => {
+	const { cartItems } = useSelector((state) => state.cart);
 	const [currentComponentIndex, setCurrentComponentIndex] = useState(0);
 	const currentComponent = () => {
 		switch (currentComponentIndex) {
@@ -21,6 +23,11 @@ const ShippingScreen = () => {
 				);
 		}
 	};
+	useEffect(() => {
+		if (cartItems.length === 0) {
+			history.push('/cart');
+		}
+	}, [cartItems, history]);
 
 	return (
 		<LoadErrHandler>
