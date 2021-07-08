@@ -6,6 +6,7 @@ import { Container, Row } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 import Steps from '../components/Steps';
 import { useSelector } from 'react-redux';
+import Success from '../components/ShippingSteps/Success';
 
 const ShippingScreen = ({ history }) => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -20,6 +21,8 @@ const ShippingScreen = ({ history }) => {
 				return (
 					<PlaceOrder setCurrentComponentIndex={setCurrentComponentIndex} />
 				);
+			case 3:
+				return <Success />;
 			default:
 				return (
 					<ShippingInformations
@@ -33,6 +36,8 @@ const ShippingScreen = ({ history }) => {
 			history.push('/cart');
 		}
 	}, [cartItems, history]);
+
+	console.log(currentComponentIndex);
 
 	return (
 		<LoadErrHandler>
