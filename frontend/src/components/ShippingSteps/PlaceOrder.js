@@ -10,9 +10,11 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 //redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { createOrder } from '../../redux/actions/orderActions';
 
 const PlaceOrder = ({ setCurrentComponentIndex }) => {
+	const dispatch = useDispatch();
 	const cart = useSelector((state) => state.cart);
 	//   Calculate prices
 	const addDecimals = (num) => {
@@ -29,6 +31,20 @@ const PlaceOrder = ({ setCurrentComponentIndex }) => {
 		Number(cart.shippingPrice) +
 		Number(cart.taxPrice)
 	).toFixed(2);
+
+	const placeOrderHandler = () => {
+		dispatch(
+			createOrder({
+				orderItems: cart.cartItems,
+				shippingAddress: cart.ShippingAddress,
+				paymentMethod: cart.PaymentMethod,
+				itemsPrice: cart.itemsPrice,
+				taxPrice: cart.taxPrice,
+				shippingPrice: cart.shippingPrice,
+				totalPrice: cart.totalPrice,
+			}),
+		);
+	};
 
 	return (
 		<>
@@ -127,6 +143,9 @@ const PlaceOrder = ({ setCurrentComponentIndex }) => {
 											variant='dark'
 											type='button'
 											className='flex-start '
+											onClick={() => {
+												placeOrderHandler();
+											}}
 										>
 											place order
 										</Button>
