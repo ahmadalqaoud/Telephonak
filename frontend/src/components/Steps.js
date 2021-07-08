@@ -11,12 +11,8 @@ const Steps = ({ lastStep, activeStep }) => {
 			icon: 'fas fa-money-bill-wave-alt',
 		},
 		{
-			name: 'Payment',
-			icon: 'fas fa-shipping-fast',
-		},
-		{
-			name: 'Payment',
-			icon: 'fas fa-shipping-fast',
+			name: 'PlaceOrder',
+			icon: 'fas fa-clipboard-check',
 		},
 	];
 	return (

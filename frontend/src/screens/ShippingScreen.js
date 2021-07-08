@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ShippingInformations from '../components/ShippingSteps/ShippingInformations';
 import PaymentMethod from '../components/ShippingSteps/PaymentMethod';
+import PlaceOrder from '../components/ShippingSteps/PlaceOrder';
 import { Container, Row } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 import Steps from '../components/Steps';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const ShippingScreen = ({ history }) => {
 	const { cartItems } = useSelector((state) => state.cart);
@@ -14,6 +15,10 @@ const ShippingScreen = ({ history }) => {
 			case 1:
 				return (
 					<PaymentMethod setCurrentComponentIndex={setCurrentComponentIndex} />
+				);
+			case 2:
+				return (
+					<PlaceOrder setCurrentComponentIndex={setCurrentComponentIndex} />
 				);
 			default:
 				return (
@@ -32,7 +37,7 @@ const ShippingScreen = ({ history }) => {
 	return (
 		<LoadErrHandler>
 			<Container>
-				<Steps lastStep={3} activeStep={currentComponentIndex - 1} />
+				<Steps lastStep={2} activeStep={currentComponentIndex - 1} />
 				<Row>{currentComponent()}</Row>
 			</Container>
 		</LoadErrHandler>
