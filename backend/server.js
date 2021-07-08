@@ -4,7 +4,7 @@ import connectDB from './config/db.js';
 import colors from 'colors';
 import productRoutes from './routes/productRoute.js';
 import userRoutes from './routes/userRoutes.js';
-import orderRoutes from './routes/orderRoutes';
+import orderRoutes from './routes/orderRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 connectDB();
