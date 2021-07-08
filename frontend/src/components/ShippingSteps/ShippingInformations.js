@@ -96,7 +96,12 @@ const ShippingInformations = ({ setCurrentComponentIndex }) => {
 									>
 										CANCEL
 									</Button>
-									<Button variant='dark' type='submit' className='flex-start '>
+									<Button
+										variant='dark'
+										type='submit'
+										className='flex-start '
+										disabled={!address || !country || !postalCode || !city}
+									>
 										NEXT
 									</Button>
 								</Col>
