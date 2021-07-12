@@ -3,6 +3,7 @@ import {
 	addOrderItems,
 	getOrderById,
 	getAllOrdersByUserID,
+	updateOrderToPaid,
 } from '../controllers/orderController.js';
 import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
@@ -10,4 +11,5 @@ const router = express.Router();
 router.route('/').post(protect, addOrderItems);
 router.route('/:id').get(protect, getOrderById);
 router.route('/').get(protect, getAllOrdersByUserID);
+router.route('/:id/pay').put(protect, updateOrderToPaid);
 export default router;
