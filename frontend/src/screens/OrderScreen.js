@@ -13,7 +13,6 @@ const OrderScreen = ({ match }) => {
 	useEffect(() => {
 		dispatch(getOrderById(match.params.id));
 	}, [dispatch, match.params.id]);
-	console.log(order);
 
 	return (
 		<LoadErrHandler
