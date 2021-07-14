@@ -7,6 +7,7 @@ import {
 	getUserDetails,
 	UpdateUserDetails,
 } from '../redux/actions/userActions';
+import { getUserOrders } from '../redux/actions/orderActions';
 
 export const ProfileForm = () => {
 	const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export const ProfileForm = () => {
 	useEffect(() => {
 		if (!user?.name) {
 			dispatch(getUserDetails());
+			dispatch(getUserOrders());
 		} else {
 			setName(user.name);
 			setEmail(user.email);

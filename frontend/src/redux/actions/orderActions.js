@@ -7,9 +7,12 @@ import {
 	ORDER_DETAILS_REQUEST,
 	ORDER_PAY_FAIL,
 	ORDER_PAY_REQUEST,
-	ORDER_PAY_RESET,
 	ORDER_PAY_SUCCESS,
+	USER_ORDERS_FAIL,
+	USER_ORDERS_REQUEST,
+	USER_ORDERS_SUCCESS,
 } from '../constants/orderConstants';
+
 import axios from 'axios';
 
 export const createOrder = (orderData) => async (dispatch, getState) => {
@@ -93,3 +96,28 @@ export const updateOrderToPaid =
 			});
 		}
 	};
+
+//get user orders
+export const getUserOrders = () => async (dispatch, getState) => {
+	dispatch({ type: USER_ORDERS_REQUEST });
+	const {
+		userLogin: { userInfo },
+	} = getState();
+	const config = {
+		headers: {
+			Authorization: `Bearer ${userInfo?.token}`,
+		},
+	};
+	try {
+		const { data } = await axios.get('/api/orders/', config);
+		dispatch({ type: USER_ORDERS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: USER_ORDERS_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};
