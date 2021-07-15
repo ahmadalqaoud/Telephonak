@@ -7,8 +7,6 @@ import {
 	getUserDetails,
 	UpdateUserDetails,
 } from '../redux/actions/userActions';
-import { getUserOrders } from '../redux/actions/orderActions';
-
 export const ProfileForm = () => {
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.userDetails);
@@ -37,7 +35,6 @@ export const ProfileForm = () => {
 	useEffect(() => {
 		if (!user?.name) {
 			dispatch(getUserDetails());
-			dispatch(getUserOrders());
 		} else {
 			setName(user.name);
 			setEmail(user.email);
@@ -45,7 +42,7 @@ export const ProfileForm = () => {
 	}, [user, dispatch]);
 	return (
 		<LoadErrHandler loading={loading}>
-			<Col lg={6} md={12} sm={12}>
+			<Col lg={12} md={12} sm={12}>
 				<Container>
 					<Form onSubmit={(e) => UpdateProfile(e)}>
 						<Form.Group className='mt-3'>
@@ -139,12 +136,6 @@ export const ProfileForm = () => {
 							</Row>
 						</div>
 					</Form>
-					<Row>
-						<Col lg={8}>
-							<h4>My orders</h4>
-							HERE GOES USER ORDERS
-						</Col>
-					</Row>
 				</Container>
 			</Col>
 		</LoadErrHandler>

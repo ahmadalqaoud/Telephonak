@@ -17,13 +17,15 @@ const OrderScreen = ({ match }) => {
 	const { success: orderPaySuccess, loading: loadingOrderPay } = useSelector(
 		(state) => state.orderPay,
 	);
+	const orderId = match.params.id;
 	const [sdkReady, setSdkReady] = useState(false);
 	const dispatch = useDispatch();
 	const successPaymentHandler = (paymentResult) => {
 		console.log(paymentResult);
-		dispatch(updateOrderToPaid(match.params.id, paymentResult));
+		dispatch(updateOrderToPaid(orderId, paymentResult));
 	};
 	useEffect(() => {
+		dispatch(getOrderById(orderId));
 		const addPayPalScript = async () => {
 			const { data: clientId } = await axios.get('/api/config/PayPal');
 			const script = document.createElement('script');
@@ -35,17 +37,16 @@ const OrderScreen = ({ match }) => {
 			};
 			document.body.appendChild(script);
 		};
-		if (!order || orderPaySuccess) {
+		if (orderPaySuccess) {
 			dispatch({ type: ORDER_PAY_RESET });
-			dispatch(getOrderById(match.params.id));
-		} else if (!order.isPaid) {
-			if (!window.paypal) {
+		} else if (!order?.isPaid) {
+			if (!sdkReady) {
 				addPayPalScript();
 			} else {
 				setSdkReady(true);
 			}
 		}
-	}, [dispatch, match.params.id, orderPaySuccess, order]);
+	}, [dispatch, orderId, orderPaySuccess]);
 
 	return (
 		<LoadErrHandler
