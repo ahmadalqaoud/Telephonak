@@ -13,6 +13,9 @@ import {
 	USER_UPDATE_PROFILE_REQUEST,
 	USER_UPDATE_PROFILE_RESET,
 	USER_UPDATE_PROFILE_SUCCESS,
+	USERS_LIST_FAIL,
+	USERS_LIST_REQUEST,
+	USERS_LIST_SUCCESS,
 } from '../constants/userConstants';
 import axios from 'axios';
 export const userLogin = (email, password) => async (dispatch) => {
@@ -125,3 +128,28 @@ export const UpdateUserDetails =
 			});
 		}
 	};
+
+//get all users for admin
+export const getUsers = () => async (dispatch, getState) => {
+	dispatch({ type: USERS_LIST_REQUEST });
+	const {
+		userLogin: { userInfo },
+	} = getState();
+	const config = {
+		headers: {
+			Authorization: `Bearer ${userInfo?.token}`,
+		},
+	};
+	try {
+		const { data } = await axios.get(`/api/users`, config);
+		dispatch({ type: USERS_LIST_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: USERS_LIST_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};
