@@ -40,6 +40,7 @@ export const userLogin = (email, password) => async (dispatch) => {
 
 //user logout
 export const userLogOut = () => (dispatch) => {
+	//TODO remove the entire state from local storage
 	localStorage.removeItem('userInfo');
 	dispatch({ type: USER_LOGIN_LOGOUT });
 };
