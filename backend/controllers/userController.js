@@ -103,3 +103,17 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 		throw new Error('Profile not found');
 	}
 });
+
+//@des      get all users for admin
+//@route    GET '/api/users/'
+//@access   PRIVATE
+export const getUsers = asyncHandler(async (req, res) => {
+	//coming from protected route
+	const users = await User.find({});
+	if (users) {
+		res.json(users);
+	} else {
+		res.status(404);
+		throw new Error('there are no users');
+	}
+});
