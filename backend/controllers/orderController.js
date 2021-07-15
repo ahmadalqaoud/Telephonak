@@ -73,7 +73,7 @@ export const getAllOrdersByUserID = asyncHandler(async (req, res) => {
 //@route    PUT '/api/orders/:id/pay'
 //@access   Private
 export const updateOrderToPaid = asyncHandler(async (req, res) => {
-	const order = await Order.find({ user: req.user._id });
+	const order = await Order.findById(req.params.id);
 	if (order) {
 		order.isPaid = true;
 		order.paidAt = Date.now();
