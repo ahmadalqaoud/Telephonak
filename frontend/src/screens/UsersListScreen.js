@@ -3,12 +3,19 @@ import { Table, Button, Alert } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { getUsers, deleteUser } from '../redux/actions/userActions';
+import {
+	getUsers,
+	deleteUser,
+	updateAdminRoleToUser,
+	updateUserRoleToAdmin,
+} from '../redux/actions/userActions';
 
 const UsersListScreen = ({ history }) => {
 	const dispatch = useDispatch();
 	const { loading, error, users } = useSelector((state) => state.usersList);
 	const { userInfo } = useSelector((state) => state.userLogin);
+	const { success: UpdateUserRoleSuccess, loading: updateUserRoleLoading } =
+		useSelector((state) => state.userRole);
 	const {
 		loading: userDeleteLoading,
 		success: userDeleteSuccess,
@@ -19,13 +26,23 @@ const UsersListScreen = ({ history }) => {
 			dispatch(deleteUser(id));
 		}
 	};
+	const changeAdminRoleHandler = (id) => {
+		dispatch(updateAdminRoleToUser(id));
+	};
+	const changeUserRoleHandler = (id) => {
+		dispatch(updateUserRoleToAdmin(id));
+	};
 	useEffect(() => {
-		if ((userInfo && userInfo.isAdmin) || userDeleteSuccess) {
+		if (
+			(userInfo && userInfo.isAdmin) ||
+			userDeleteSuccess ||
+			UpdateUserRoleSuccess
+		) {
 			dispatch(getUsers());
 		} else {
 			history.push('/');
 		}
-	}, [dispatch, userInfo, history, userDeleteSuccess]);
+	}, [dispatch, userInfo, history, userDeleteSuccess, UpdateUserRoleSuccess]);
 
 	return (
 		<LoadErrHandler
@@ -33,14 +50,14 @@ const UsersListScreen = ({ history }) => {
 			error={error ? 'Ops! something went wrong' : ''}
 		>
 			<h1>users</h1>
-			{userDeleteLoading && <h5>loading...</h5>}
+			{(userDeleteLoading || updateUserRoleLoading) && <h5>loading...</h5>}
 			{userDeleteError && (
 				<Alert className='full-width' variant='danger'>
 					{userDeleteError}
 				</Alert>
 			)}
 			{users ? (
-				<Table striped bordered hovered responsive className='table-sm'>
+				<Table striped bordered hover responsive className='table-sm'>
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -62,7 +79,13 @@ const UsersListScreen = ({ history }) => {
 										{!user.isAdmin ? (
 											<>
 												{userInfo._id !== user._id && (
-													<Button variant='primary' className='m-1 btn-sm'>
+													<Button
+														variant='primary'
+														className='m-1 btn-sm'
+														onClick={() => {
+															changeUserRoleHandler(user._id);
+														}}
+													>
 														CHANGE ROLE TO ADMIN
 													</Button>
 												)}
@@ -70,7 +93,13 @@ const UsersListScreen = ({ history }) => {
 										) : (
 											<>
 												{userInfo._id !== user._id && (
-													<Button variant='primary' className='m-1 btn-sm'>
+													<Button
+														variant='primary'
+														className='m-1 btn-sm'
+														onClick={() => {
+															changeAdminRoleHandler(user._id);
+														}}
+													>
 														CHANGE ROLE TO USER
 													</Button>
 												)}
