@@ -76,9 +76,9 @@ const UsersListScreen = ({ history }) => {
 									<td>{user.email}</td>
 									<td>{user.isAdmin ? 'Admin' : 'User'}</td>
 									<td>
-										{!user.isAdmin ? (
+										{!user.isAdmin && userInfo ? (
 											<>
-												{userInfo._id !== user._id && (
+												{userInfo?._id !== user._id && (
 													<Button
 														variant='primary'
 														className='m-1 btn-sm'
@@ -92,7 +92,7 @@ const UsersListScreen = ({ history }) => {
 											</>
 										) : (
 											<>
-												{userInfo._id !== user._id && (
+												{userInfo?._id !== user._id && (
 													<Button
 														variant='primary'
 														className='m-1 btn-sm'
@@ -105,7 +105,7 @@ const UsersListScreen = ({ history }) => {
 												)}
 											</>
 										)}
-										{userInfo._id !== user._id && (
+										{userInfo?._id !== user._id && (
 											<Button
 												variant='danger'
 												className='m-1 btn-sm'
