@@ -117,3 +117,19 @@ export const getUsers = asyncHandler(async (req, res) => {
 		throw new Error('there are no users');
 	}
 });
+
+//@des      delete user by id
+//@route    DELETE '/api/users/:id'
+//@access   PRIVATE
+export const deleteUserById = asyncHandler(async (req, res) => {
+	//find the user
+	const user = await User.findById(req.params.id);
+	if (user) {
+		// delete the user
+		await user.remove();
+		res.json({ message: 'user removed' });
+	} else {
+		res.status(404);
+		throw new Error('user not found');
+	}
+});
