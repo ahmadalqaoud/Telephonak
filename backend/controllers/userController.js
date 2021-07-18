@@ -133,3 +133,34 @@ export const deleteUserById = asyncHandler(async (req, res) => {
 		throw new Error('user not found');
 	}
 });
+//@des      change user role of user to admin
+//@route    PUT '/api/users/adminRole/:id'
+//@access   PRIVATE
+export const updateUserRole = asyncHandler(async (req, res) => {
+	//coming from protected route
+	const user = await User.findById(req.params.id).select('-password');
+	if (user && !user.isAdmin) {
+		user.isAdmin = true;
+		const updatedUser = await user.save();
+		res.json(updatedUser);
+	} else {
+		res.status(404);
+		throw new Error('Profile not found');
+	}
+});
+
+//@des      change user role of user to admin
+//@route    PUT '/api/users/userRole/:id'
+//@access   PRIVATE
+export const updateAdminRole = asyncHandler(async (req, res) => {
+	//coming from protected route
+	const user = await User.findById(req.params.id).select('-password');
+	if (user && user.isAdmin) {
+		user.isAdmin = false;
+		const updatedUser = await user.save();
+		res.json(updatedUser);
+	} else {
+		res.status(404);
+		throw new Error('Profile not found');
+	}
+});

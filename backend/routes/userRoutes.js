@@ -5,6 +5,8 @@ import {
 	updateUserProfile,
 	getUsers,
 	deleteUserById,
+	updateAdminRole,
+	updateUserRole,
 } from '../controllers/userController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import express from 'express';
@@ -16,4 +18,6 @@ router.route('/profile').put(protect, updateUserProfile);
 //admin routes
 router.route('/').get(protect, admin, getUsers);
 router.route('/:id').delete(protect, admin, deleteUserById);
+router.route('/userRole/:id').put(protect, admin, updateAdminRole);
+router.route('/adminRole/:id').put(protect, admin, updateUserRole);
 export default router;

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Table, Button, Alert } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
-import { LinkContainer } from 'react-router-bootstrap';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { getUsers, deleteUser } from '../redux/actions/userActions';
@@ -60,20 +59,34 @@ const UsersListScreen = ({ history }) => {
 									<td>{user.email}</td>
 									<td>{user.isAdmin ? 'Admin' : 'User'}</td>
 									<td>
-										<LinkContainer to={`/user/${user._id}/edit`}>
-											<Button variant='light' className='btn-sm'>
-												EDIT
+										{!user.isAdmin ? (
+											<>
+												{userInfo._id !== user._id && (
+													<Button variant='primary' className='m-1 btn-sm'>
+														CHANGE ROLE TO ADMIN
+													</Button>
+												)}
+											</>
+										) : (
+											<>
+												{userInfo._id !== user._id && (
+													<Button variant='primary' className='m-1 btn-sm'>
+														CHANGE ROLE TO USER
+													</Button>
+												)}
+											</>
+										)}
+										{userInfo._id !== user._id && (
+											<Button
+												variant='danger'
+												className='m-1 btn-sm'
+												onClick={() => {
+													deleteHandler(user._id);
+												}}
+											>
+												DELETE
 											</Button>
-										</LinkContainer>
-										<Button
-											variant='danger'
-											className='btn-sm'
-											onClick={() => {
-												deleteHandler(user._id);
-											}}
-										>
-											DELETE
-										</Button>
+										)}
 									</td>
 								</tr>
 							);
