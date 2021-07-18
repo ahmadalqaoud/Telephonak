@@ -1,4 +1,3 @@
-//@TODO : COMPLETE PAYPAL PAYMENT AFTER 25th JUN
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOrderById } from '../redux/actions/orderActions';
