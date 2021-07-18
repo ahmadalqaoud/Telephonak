@@ -19,6 +19,12 @@ import {
 	USER_DELETE_FAIL,
 	USER_DELETE_REQUEST,
 	USER_DELETE_SUCCESS,
+	UPDATE_ADMIN_ROLE_FAIL,
+	UPDATE_ADMIN_ROLE_REQUEST,
+	UPDATE_ADMIN_ROLE_SUCCESS,
+	UPDATE_USER_ROLE_FAIL,
+	UPDATE_USER_ROLE_REQUEST,
+	UPDATE_USER_ROLE_SUCCESS,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -100,6 +106,23 @@ export const userDeleteReducer = (state = {}, action) => {
 		case USER_DELETE_SUCCESS:
 			return { loading: false, success: true };
 		case USER_DELETE_FAIL:
+			return { loading: false, error: payload, success: false };
+		default:
+			return state;
+	}
+};
+
+export const userRoleReducer = (state = {}, action) => {
+	const { payload, type } = action;
+	switch (type) {
+		case UPDATE_ADMIN_ROLE_REQUEST:
+		case UPDATE_USER_ROLE_REQUEST:
+			return { loading: true };
+		case UPDATE_ADMIN_ROLE_SUCCESS:
+		case UPDATE_USER_ROLE_SUCCESS:
+			return { loading: false, success: true };
+		case UPDATE_ADMIN_ROLE_FAIL:
+		case UPDATE_USER_ROLE_FAIL:
 			return { loading: false, error: payload, success: false };
 		default:
 			return state;
