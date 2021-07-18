@@ -4,24 +4,26 @@ import { LinkContainer } from 'react-router-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts } from '../redux/actions/productsActions';
+import { getProducts, removeProduct } from '../redux/actions/productsActions';
 
 const ProductsListScreen = ({ history }) => {
 	const dispatch = useDispatch();
 	const { loading, error, products } = useSelector((state) => state.products);
+	const { success: productDeleteSuccess, loading: productDeleteLoading } =
+		useSelector((state) => state.productDelete);
 	const { userInfo } = useSelector((state) => state.userLogin);
 	const deleteHandler = (id) => {
 		if (window.confirm('Are you sure you want to delete this user?')) {
-			// dispatch(deleteUser(id));
+			dispatch(removeProduct(id));
 		}
 	};
 	useEffect(() => {
-		if (userInfo && userInfo.isAdmin) {
+		if ((userInfo && userInfo.isAdmin) || productDeleteSuccess) {
 			dispatch(getProducts());
 		} else {
 			history.push('/');
 		}
-	}, [dispatch, userInfo, history]);
+	}, [dispatch, userInfo, history, productDeleteSuccess]);
 
 	return (
 		<LoadErrHandler
