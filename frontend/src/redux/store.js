@@ -42,7 +42,7 @@ const reducer = combineReducers({
 	userRole: userRoleReducer,
 	productDelete: productDeleteReducer,
 	productCreate: productCreateReducer,
-	productUpdate: productCreateReducer,
+	productUpdate: productUpdateReducer,
 });
 const LocalStorageCartItems = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
