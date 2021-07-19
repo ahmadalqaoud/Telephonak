@@ -4,26 +4,45 @@ import { LinkContainer } from 'react-router-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts, removeProduct } from '../redux/actions/productsActions';
+import {
+	getProducts,
+	removeProduct,
+	createProduct,
+} from '../redux/actions/productsActions';
 
 const ProductsListScreen = ({ history }) => {
 	const dispatch = useDispatch();
 	const { loading, error, products } = useSelector((state) => state.products);
-	const { success: productDeleteSuccess, loading: productDeleteLoading } =
-		useSelector((state) => state.productDelete);
+	const {
+		success: productDeleteSuccess,
+		loading: productDeleteLoading,
+		error: productDeleteError,
+	} = useSelector((state) => state.productDelete);
+	const {
+		success: productCreateSuccess,
+		loading: productCreateLoading,
+		error: productCreateError,
+		product: createdProduct,
+	} = useSelector((state) => state.productCreate);
 	const { userInfo } = useSelector((state) => state.userLogin);
 	const deleteHandler = (id) => {
-		if (window.confirm('Are you sure you want to delete this user?')) {
+		if (window.confirm('Are you sure you want to delete this product?')) {
 			dispatch(removeProduct(id));
 		}
 	};
+	const createProductHandler = () => {
+		dispatch(createProduct());
+	};
 	useEffect(() => {
+		if (productCreateSuccess && createdProduct) {
+			history.push(`/admin/product/${createdProduct._id}/edit`);
+		}
 		if ((userInfo && userInfo.isAdmin) || productDeleteSuccess) {
 			dispatch(getProducts());
 		} else {
 			history.push('/');
 		}
-	}, [dispatch, userInfo, history, productDeleteSuccess]);
+	}, [dispatch, userInfo, history, productDeleteSuccess, productCreateSuccess]);
 
 	return (
 		<LoadErrHandler
@@ -35,8 +54,14 @@ const ProductsListScreen = ({ history }) => {
 					<h1>Products</h1>
 				</Col>
 				<Col className='text-right'>
-					<Button className='my-3'>
-						<i className='fas fa-plus'></i> Create Product
+					<Button className='my-3' onClick={() => createProductHandler()}>
+						{productCreateLoading ? (
+							<small>loading..</small>
+						) : (
+							<>
+								<i className='fas fa-plus'></i> Create Product
+							</>
+						)}
 					</Button>
 				</Col>
 			</Row>
