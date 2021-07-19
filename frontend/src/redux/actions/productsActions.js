@@ -94,8 +94,9 @@ export const createProduct = () => async (dispatch, getState) => {
 	};
 	try {
 		dispatch({ type: PRODUCT_CREATE_REQUEST });
-		await axios.post(`/api/products`, {}, config);
+		const { data } = await axios.post(`/api/products`, {}, config);
 		dispatch({
+			payload: data,
 			type: PRODUCT_CREATE_SUCCESS,
 		});
 	} catch (error) {
@@ -123,10 +124,12 @@ export const updateProduct =
 		const body = JSON.stringify(productData);
 		try {
 			dispatch({ type: PRODUCT_UPDATE_REQUEST });
-			await axios.put(`/api/products/${productID}`, body, config);
-			dispatch({
-				type: PRODUCT_UPDATE_SUCCESS,
-			});
+			const { data } = await axios.put(
+				`/api/products/${productID}`,
+				body,
+				config,
+			);
+			dispatch({ payload: data, type: PRODUCT_UPDATE_SUCCESS });
 		} catch (error) {
 			dispatch({
 				type: PRODUCT_UPDATE_FAIL,
