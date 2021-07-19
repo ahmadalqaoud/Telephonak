@@ -118,15 +118,15 @@ export const updateProduct =
 		} = getState();
 		const config = {
 			headers: {
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${userInfo?.token}`,
 			},
 		};
-		const body = JSON.stringify(productData);
 		try {
 			dispatch({ type: PRODUCT_UPDATE_REQUEST });
 			const { data } = await axios.put(
 				`/api/products/${productID}`,
-				body,
+				productData,
 				config,
 			);
 			dispatch({ payload: data, type: PRODUCT_UPDATE_SUCCESS });

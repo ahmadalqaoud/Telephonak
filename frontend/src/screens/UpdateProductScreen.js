@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { PRODUCT_CREATE_RESET } from '../redux/constants/productsConstants';
-import { Link } from 'react-router-dom';
+import {
+	PRODUCT_CREATE_RESET,
+	PRODUCT_UPDATE_RESET,
+} from '../redux/constants/productsConstants';
 import { getProductDetails } from '../redux/actions/productsActions';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
 import LoadErrHandler from '../components/LoadErrHandler';
+import { updateProduct } from '../redux/actions/productsActions';
 const UpdateProductScreen = ({ match, history }) => {
 	const dispatch = useDispatch();
 	const { userInfo } = useSelector((state) => state.userLogin);
 	const { product, loading, error } = useSelector(
 		(state) => state.productDetails,
 	);
+	const {
+		success,
+		loading: updateProductLoading,
+		error: UpdateProductError,
+	} = useSelector((state) => state.productUpdate);
 	const [name, setName] = useState('');
 	const [price, setPrice] = useState('');
 	const [image, setImage] = useState('');
@@ -19,22 +27,41 @@ const UpdateProductScreen = ({ match, history }) => {
 	const [countInStock, setCountInStock] = useState(0);
 	const [description, setDescription] = useState('');
 	const id = match.params.id;
+	const updateProductHandler = (e) => {
+		e.preventDefault();
+		dispatch(
+			updateProduct(id, {
+				name,
+				price,
+				image,
+				brand,
+				category,
+				countInStock,
+				description,
+			}),
+		);
+	};
 	useEffect(() => {
-		if (userInfo && userInfo.isAdmin) {
-			if (!product?.name || product?._id !== id) {
-				dispatch(getProductDetails(id));
-			} else {
-				setName(product.name);
-				setPrice(product.price);
-				setBrand(product.brand);
-				setCategory(product.category);
-				setDescription(product.description);
-				setImage(product.image);
-			}
+		if (success) {
+			dispatch({ type: PRODUCT_UPDATE_RESET });
+			history.push('/admin/productsList');
 		} else {
-			history.push('/');
+			dispatch({ type: PRODUCT_CREATE_RESET });
+			if (userInfo && userInfo.isAdmin) {
+				if (!product?.name || product?._id !== id) {
+					dispatch(getProductDetails(id));
+				} else {
+					setName(product.name);
+					setPrice(product.price);
+					setBrand(product.brand);
+					setCategory(product.category);
+					setDescription(product.description);
+					setImage(product.image);
+				}
+			} else {
+				history.push('/');
+			}
 		}
-		dispatch({ type: PRODUCT_CREATE_RESET });
 	}, [
 		dispatch,
 		userInfo,
@@ -48,6 +75,7 @@ const UpdateProductScreen = ({ match, history }) => {
 		product?.category,
 		product?.description,
 		product?.image,
+		success,
 	]);
 	return (
 		<LoadErrHandler
@@ -55,8 +83,15 @@ const UpdateProductScreen = ({ match, history }) => {
 			error={error ? 'Ops! something went wrong' : ''}
 		>
 			<Container className='flex p-4 w-75'>
+				{UpdateProductError && (
+					<Alert variant='danger'>{UpdateProductError}</Alert>
+				)}
 				<h1>Edit Product</h1>
-				<Form>
+				<Form
+					onSubmit={(e) => {
+						updateProductHandler(e);
+					}}
+				>
 					<Form.Group controlId='name'>
 						<Form.Label>Name</Form.Label>
 						<Form.Control
@@ -128,7 +163,11 @@ const UpdateProductScreen = ({ match, history }) => {
 					</Form.Group>
 					<hr />
 					<Button type='submit' variant='primary'>
-						Update
+						{updateProductLoading ? (
+							<small>loading...</small>
+						) : (
+							<small>update</small>
+						)}
 					</Button>
 				</Form>
 			</Container>
