@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	PRODUCT_CREATE_RESET,
@@ -26,6 +27,7 @@ const UpdateProductScreen = ({ match, history }) => {
 	const [category, setCategory] = useState('');
 	const [countInStock, setCountInStock] = useState(0);
 	const [description, setDescription] = useState('');
+	const [upload, setUpload] = useState(false);
 	const id = match.params.id;
 	const updateProductHandler = (e) => {
 		e.preventDefault();
@@ -40,6 +42,28 @@ const UpdateProductScreen = ({ match, history }) => {
 				description,
 			}),
 		);
+	};
+	const uploadFileHandler = async (e) => {
+		const file = e.target.files[0];
+		console.log(file);
+		const formData = new FormData();
+		formData.append('image', file);
+		console.log(formData);
+		setUpload(true);
+		try {
+			const config = {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					Authorization: `Bearer ${userInfo?.token}`,
+				},
+			};
+			const { data } = await axios.post('/api/uploads', formData, config);
+			setImage(data);
+			setUpload(false);
+		} catch (error) {
+			console.log(error);
+			setUpload(false);
+		}
 	};
 	useEffect(() => {
 		if (success) {
@@ -159,7 +183,14 @@ const UpdateProductScreen = ({ match, history }) => {
 							type='text'
 							placeholder='Enter image url'
 						></Form.Control>
-						<Form.File id='image-file' custom className='mt-2'></Form.File>
+						<Form.File
+							onChange={uploadFileHandler}
+							id='image-file'
+							custom
+							className='mt-2'
+						>
+							{upload && <small>loading ...</small>}
+						</Form.File>
 					</Form.Group>
 					<hr />
 					<Button type='submit' variant='primary'>

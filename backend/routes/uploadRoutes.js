@@ -1,35 +1,36 @@
+import path from 'path';
 import express from 'express';
-import path, { extname } from 'path';
-const router = express.Router();
-import { protect, admin } from '../middleware/authMiddleware.js';
 import multer from 'multer';
+import { admin, protect } from '../middleware/authMiddleware.js';
+const router = express.Router();
+
 const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
+	destination(req, file, cb) {
 		cb(null, 'uploads/');
 	},
-	filename: (req, file, cb) => {
+	filename(req, file, cb) {
 		cb(
 			null,
-			`${file.filename}-${Date.now()}${path.extname(file.originalname)}`,
+			`${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`,
 		);
 	},
 });
-const checkFileType = (file, cb) => {
-	const fileTypes = /jpg|jpeg|png/;
-	const extName = fileTypes.test(
-		path.extname(file.originalname).toLocaleLowerCase(),
-	);
-	const mimetype = fileTypes.test(file.mimetype);
+
+function checkFileType(file, cb) {
+	const filetypes = /jpg|jpeg|png/;
+	const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+	const mimetype = filetypes.test(file.mimetype);
 
 	if (extname && mimetype) {
-		return null, true;
+		return cb(null, true);
 	} else {
-		cb('images only');
+		cb('Images only!');
 	}
-};
+}
+
 const upload = multer({
 	storage,
-	fileFilter: (req, file, cb) => {
+	fileFilter: function (req, file, cb) {
 		checkFileType(file, cb);
 	},
 });
@@ -37,4 +38,5 @@ const upload = multer({
 router.post('/', protect, admin, upload.single('image'), (req, res) => {
 	res.send(`/${req.file.path}`);
 });
+
 export default router;
