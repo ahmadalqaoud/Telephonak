@@ -91,3 +91,17 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 		return;
 	}
 });
+
+// @des    get all orders
+//@route    GET '/api/orders/all'
+//@access   Private
+export const getOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({}).populate('user', 'id name');
+	if (orders) {
+		res.json(orders);
+	} else {
+		res.status(404);
+		throw new Error('no order found');
+		return;
+	}
+});
