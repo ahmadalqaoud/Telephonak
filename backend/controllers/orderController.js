@@ -46,7 +46,10 @@ export const getOrderById = asyncHandler(async (req, res) => {
 		throw new Error('no order found');
 		return;
 	}
-	if (req.user._id.toString() === order.user._id.toString()) {
+	if (
+		req.user._id.toString() === order.user._id.toString() ||
+		req.user.isAdmin
+	) {
 		res.json(order);
 	} else {
 		res.status(401);

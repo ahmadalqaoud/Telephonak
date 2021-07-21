@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadErrHandler from '../components/LoadErrHandler';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { ORDER_DELIVERED_RESET } from '../redux/constants/orderConstants';
 const OrdersScreen = ({ history }) => {
 	const dispatch = useDispatch();
 	const { loading, error, orders } = useSelector(
@@ -12,6 +13,7 @@ const OrdersScreen = ({ history }) => {
 	const { userInfo } = useSelector((state) => state.userLogin);
 	useEffect(() => {
 		if (userInfo && userInfo.isAdmin) {
+			dispatch({ type: ORDER_DELIVERED_RESET });
 			dispatch(getAdminOrders());
 		} else {
 			history.push('/');

@@ -2,20 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOrderById } from '../redux/actions/orderActions';
 import LoadErrHandler from '../components/LoadErrHandler';
-import { Container, ListGroup, Row, Col, Image, Card } from 'react-bootstrap';
+import {
+	Container,
+	ListGroup,
+	Row,
+	Col,
+	Image,
+	Card,
+	Button,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
-import { updateOrderToPaid } from '../redux/actions/orderActions';
+import {
+	updateOrderToPaid,
+	updateOrderToDelivered,
+} from '../redux/actions/orderActions';
 import { ORDER_PAY_RESET } from '../redux/constants/orderConstants';
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
 	const { success, order, loading } = useSelector(
 		(state) => state.orderDetails,
 	);
 	const { success: orderPaySuccess, loading: loadingOrderPay } = useSelector(
 		(state) => state.orderPay,
 	);
+	const { success: orderDeliveredSuccess, loading: loadingOrderDelivered } =
+		useSelector((state) => state.orderDeliver);
+	const { userInfo } = useSelector((state) => state.userLogin);
 	const orderId = match.params.id;
 	const [sdkReady, setSdkReady] = useState(false);
 	const dispatch = useDispatch();
@@ -23,8 +37,14 @@ const OrderScreen = ({ match }) => {
 		console.log(paymentResult);
 		dispatch(updateOrderToPaid(orderId, paymentResult));
 	};
+	const successDeliveredHandler = () => {
+		dispatch(updateOrderToDelivered(orderId));
+	};
 	useEffect(() => {
 		dispatch(getOrderById(orderId));
+		if (orderDeliveredSuccess) {
+			history.push('/admin/ordersList');
+		}
 		const addPayPalScript = async () => {
 			const { data: clientId } = await axios.get('/api/config/PayPal');
 			const script = document.createElement('script');
@@ -45,7 +65,7 @@ const OrderScreen = ({ match }) => {
 				setSdkReady(true);
 			}
 		}
-	}, [dispatch, orderId, orderPaySuccess]);
+	}, [dispatch, orderId, orderPaySuccess, orderDeliveredSuccess]);
 
 	return (
 		<LoadErrHandler
@@ -151,13 +171,33 @@ const OrderScreen = ({ match }) => {
 										<Row>
 											<Col>Delivered</Col>
 											<Col>
-												{order.isDelivered ? (
+												{order?.isDelivered ? (
 													<small>
-														ORDER IS DELIVERED at PUT DELEVERY DATE !!!!! {` `}
+														ORDER IS DELIVERED at {order.deliveredAt}
 														<i className='fas fa-check-circle' />
 													</small>
 												) : (
-													<small>ORDER ISN'T DELIVERED YET</small>
+													<>
+														<Row>
+															<Col>
+																<small>ORDER ISN'T DELIVERED YET</small>
+															</Col>
+															<Col>
+																{userInfo.isAdmin && (
+																	<Button
+																		className=''
+																		onClick={successDeliveredHandler}
+																	>
+																		{loadingOrderDelivered ? (
+																			<small>loading..</small>
+																		) : (
+																			<small>DELIVERER</small>
+																		)}
+																	</Button>
+																)}
+															</Col>
+														</Row>
+													</>
 												)}
 											</Col>
 										</Row>
