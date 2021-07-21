@@ -15,6 +15,7 @@ import OrderScreen from './screens/OrderScreen';
 import UsersListScreen from './screens/UsersListScreen';
 import ProductsListScreen from './screens/ProductsListScreen';
 import UpdateProductScreen from './screens/UpdateProductScreen';
+import OrdersScreen from './screens/OrdersScreen';
 const App = () => {
 	return (
 		<Router>
@@ -35,6 +36,7 @@ const App = () => {
 						path='/admin/product/:id/edit'
 						component={UpdateProductScreen}
 					/>
+					<Route path='/admin/ordersList' component={OrdersScreen} />
 				</Container>
 			</main>
 			<Footer />
