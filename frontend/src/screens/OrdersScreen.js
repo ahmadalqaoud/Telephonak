@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { getAdminOrders } from '../redux/actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadErrHandler from '../components/LoadErrHandler';
-import { Table, Button, Alert, Row, Col } from 'react-bootstrap';
+import { Table, Button, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 const OrdersScreen = ({ history }) => {
 	const dispatch = useDispatch();
