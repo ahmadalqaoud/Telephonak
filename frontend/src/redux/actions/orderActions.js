@@ -14,6 +14,9 @@ import {
 	ORDERS_DETAILS_REQUEST,
 	ORDERS_DETAILS_SUCCESS,
 	ORDERS_DETAILS_FAIL,
+	ORDER_DELIVERED_REQUEST,
+	ORDER_DELIVERED_SUCCESS,
+	ORDER_DELIVERED_FAIL,
 } from '../constants/orderConstants';
 
 import axios from 'axios';
@@ -149,3 +152,34 @@ export const getAdminOrders = () => async (dispatch, getState) => {
 		});
 	}
 };
+
+// Update order to paid
+export const updateOrderToDelivered =
+	(orderId) => async (dispatch, getState) => {
+		dispatch({ type: ORDER_DELIVERED_REQUEST });
+		const {
+			userLogin: { userInfo },
+		} = getState();
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo?.token}`,
+			},
+		};
+		try {
+			const { data } = await axios.put(
+				`/api/orders/${orderId}/deliver`,
+				{},
+				config,
+			);
+			dispatch({ type: ORDER_DELIVERED_SUCCESS, payload: data });
+		} catch (error) {
+			dispatch({
+				type: ORDER_DELIVERED_FAIL,
+				payload:
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message,
+			});
+		}
+	};
