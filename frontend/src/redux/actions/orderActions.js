@@ -11,6 +11,9 @@ import {
 	USER_ORDERS_FAIL,
 	USER_ORDERS_REQUEST,
 	USER_ORDERS_SUCCESS,
+	ORDERS_DETAILS_REQUEST,
+	ORDERS_DETAILS_SUCCESS,
+	ORDERS_DETAILS_FAIL,
 } from '../constants/orderConstants';
 
 import axios from 'axios';
@@ -114,6 +117,31 @@ export const getUserOrders = () => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({
 			type: USER_ORDERS_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};
+//get all orders for admin
+
+export const getAdminOrders = () => async (dispatch, getState) => {
+	dispatch({ type: ORDERS_DETAILS_REQUEST });
+	const {
+		userLogin: { userInfo },
+	} = getState();
+	const config = {
+		headers: {
+			Authorization: `Bearer ${userInfo?.token}`,
+		},
+	};
+	try {
+		const { data } = await axios.get('/api/orders/all', config);
+		dispatch({ type: ORDERS_DETAILS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: ORDERS_DETAILS_FAIL,
 			payload:
 				error.response && error.response.data.message
 					? error.response.data.message
