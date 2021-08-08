@@ -1,7 +1,9 @@
-import React from 'react'
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import React from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useSelector } from 'react-redux';
 const NavBar = () => {
+	// const { cartItems } = useSelector((state) => state.cart);
 	return (
 		<>
 			<Navbar bg='dark' variant='dark'>
@@ -13,7 +15,10 @@ const NavBar = () => {
 						<LinkContainer exact to='/Cart'>
 							<Nav.Link>
 								<i className='fas fa-shopping-cart' /> {` `}
-								CART
+								CART {` `}
+								{/* {cartItems && cartItems.length > 0 && (
+									<p className='cart-counter'>{cartItems.length}</p>
+								)} */}
 							</Nav.Link>
 						</LinkContainer>
 						<LinkContainer to='/SignIn'>
@@ -26,7 +31,7 @@ const NavBar = () => {
 				</Container>
 			</Navbar>
 		</>
-	)
-}
+	);
+};
 
-export default NavBar
+export default NavBar;
