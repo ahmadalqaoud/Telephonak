@@ -5,8 +5,8 @@ const Footer = () => {
 		<footer>
 			{/* <Container>
 				<Row>
-					<Col className='text-center py-3'>
-						<span>All copyrights reserved</span>
+					<Col className='py-3 text-center'>
+						<small>Handcrafted by me © SABBAGH</small>
 					</Col>
 				</Row>
 			</Container> */}
