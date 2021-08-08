@@ -1,6 +1,6 @@
-import React from 'react'
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import React from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 const NavBar = () => {
 	return (
 		<>
@@ -26,7 +26,7 @@ const NavBar = () => {
 				</Container>
 			</Navbar>
 		</>
-	)
-}
+	);
+};
 
-export default NavBar
+export default NavBar;
