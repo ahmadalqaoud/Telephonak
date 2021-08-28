@@ -46,7 +46,10 @@ export const getOrderById = asyncHandler(async (req, res) => {
 		throw new Error('no order found');
 		return;
 	}
-	if (req.user._id.toString() === order.user._id.toString()) {
+	if (
+		req.user._id.toString() === order.user._id.toString() ||
+		req.user.isAdmin
+	) {
 		res.json(order);
 	} else {
 		res.status(401);
@@ -83,6 +86,37 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 			update_time: req.body.update_time,
 			email_address: req.body.payer.email_address,
 		};
+		const updatedOrder = await order.save();
+		res.json(updatedOrder);
+	} else {
+		res.status(404);
+		throw new Error('no order found');
+		return;
+	}
+});
+
+// @des    get all orders
+//@route    GET '/api/orders/all'
+//@access   Private
+export const getOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({}).populate('user', 'id name');
+	if (orders) {
+		res.json(orders);
+	} else {
+		res.status(404);
+		throw new Error('no order found');
+		return;
+	}
+});
+
+// @des     Update order to paid
+//@route    PUT '/api/orders/:id/deliver'
+//@access   Private
+export const updateOrderToDelivered = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+	if (order) {
+		order.isDelivered = true;
+		order.deliveredAt = Date.now();
 		const updatedOrder = await order.save();
 		res.json(updatedOrder);
 	} else {
