@@ -25,6 +25,11 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+
+//config PayPal
+app.get('/api/config/PayPal', (req, res) => {
+	res.send(process.env.PAYPAL_CLIENT_ID);
+});
 //-----errors middleware
 app.use(notFound);
 app.use(errorHandler);
