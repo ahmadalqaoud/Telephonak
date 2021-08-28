@@ -1,11 +1,11 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
-import Rating from './Rating'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Card } from 'react-bootstrap';
+import Rating from './Rating';
+import { Link } from 'react-router-dom';
 
 const Product = ({ product }) => {
 	return (
-		<Card className='my-3 ' style={{ height: '100%' }}>
+		<Card className='my-3 mb-2 ' style={{ height: '95%' }}>
 			<Link to={`/product/${product._id}`}>
 				<Card.Img src={product.image} />
 			</Link>
@@ -28,7 +28,7 @@ const Product = ({ product }) => {
 				${product.price}
 			</Card.Footer>
 		</Card>
-	)
-}
+	);
+};
 
-export default Product
+export default Product;

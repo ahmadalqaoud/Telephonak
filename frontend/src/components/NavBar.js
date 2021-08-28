@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useSelector } from 'react-redux';
-const NavBar = () => {
-	// const { cartItems } = useSelector((state) => state.cart);
+import DropDownNav from './DropDownNav';
+const NavBar = ({ userLogin }) => {
+	const { userInfo } = userLogin;
 	return (
 		<>
 			<Navbar bg='dark' variant='dark'>
@@ -11,20 +11,21 @@ const NavBar = () => {
 					<LinkContainer exact to='/'>
 						<Navbar.Brand>TELEPHONAK</Navbar.Brand>
 					</LinkContainer>
-					<Nav className='ml-auto'>
+					<Nav>
+						{userInfo ? (
+							<DropDownNav userName={userInfo.name} />
+						) : (
+							<LinkContainer to='/SignIn'>
+								<Nav.Link>
+									<i className='fas fa-user' /> {` `}
+									Sign In
+								</Nav.Link>
+							</LinkContainer>
+						)}
 						<LinkContainer exact to='/Cart'>
 							<Nav.Link>
 								<i className='fas fa-shopping-cart' /> {` `}
-								CART {` `}
-								{/* {cartItems && cartItems.length > 0 && (
-									<p className='cart-counter'>{cartItems.length}</p>
-								)} */}
-							</Nav.Link>
-						</LinkContainer>
-						<LinkContainer to='/SignIn'>
-							<Nav.Link>
-								<i className='fas fa-user' /> {` `}
-								Sign In
+								<span className='hide-sm'>CART</span>
 							</Nav.Link>
 						</LinkContainer>
 					</Nav>

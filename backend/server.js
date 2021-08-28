@@ -3,11 +3,14 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import colors from 'colors';
 import productRoutes from './routes/productRoute.js';
+import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 connectDB();
 dotenv.config();
 const app = express();
+//to accept json
+app.use(express.json());
 
 //initial route!
 app.get('/', (req, res) => {
@@ -19,6 +22,7 @@ app.get('/', (req, res) => {
 });
 //--------------- routes
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 //-----errors middleware
 app.use(notFound);
 app.use(errorHandler);
