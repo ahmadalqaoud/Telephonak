@@ -29,8 +29,8 @@ const ProfileScreen = ({ history, location }) => {
 	}, [history, userInfo]);
 	return (
 		<LoadErrHandler>
-			<Container className='flex-center-container'>
-				<Row className='register-container'>
+			<Container>
+				<Row>
 					<SideImage />
 					<ProfileForm redirect={redirect} />
 				</Row>
